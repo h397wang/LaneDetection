@@ -6,7 +6,7 @@ OpenCV 3.2.0
 
 ### Directory Structure
 build: compilation script and output/executible files
-demo: demo videos and screenshots of the program
+demo: demo videos (sorry they're .mov files) and screenshots of the program
 imgs: test images
 src: source code and CMake file
 vids: test videos
