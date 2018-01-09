@@ -148,6 +148,7 @@ void drawHoughLines(
     }
 }
 
+
 Mat detectLanes( Mat aMat )
 {
     // Grayscale
@@ -188,7 +189,7 @@ Mat detectLanes( Mat aMat )
         aMat,
         vLaneLine.mPt1,
         vLaneLine.mPt2,
-        Scalar( 255, 255, 255 ),
+        Scalar( 0, 155, 255 ),
         3,
         CV_AA
         );
@@ -200,13 +201,14 @@ Mat detectLanes( Mat aMat )
     Mat vMatRoi = vMatEdges( vRoiRect );
     vector<Vec2f> vLines;
     HoughLines( vMatRoi, vLines, vRho, vTheta, vThreshold );
+    vLines = groupLines( vLines, 5 * vRho, 5 * vTheta);
     vector<line_t> vProcessedLines = processHoughLines( vLines, vRoiRect );
     line_t vLaneLine = extractCurrentLaneLine( vProcessedLines );
     line(
         aMat,
         vLaneLine.mPt1,
         vLaneLine.mPt2,
-        Scalar( 255, 255, 255 ),
+        Scalar( 0, 155, 255 ),
         3,
         CV_AA
         );    

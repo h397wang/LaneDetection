@@ -11,6 +11,7 @@ int main( int argc, char* argv[] )
     if ( argc != vNumExpArgs )
     {
         cerr << "Invalid number of args. Expected " << vNumExpArgs << ". Got " << argc << endl;
+        cerr << "./ProgramName <FilePath>" << endl;
         return -1;
     }
 
