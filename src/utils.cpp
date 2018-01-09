@@ -148,6 +148,33 @@ void drawHoughLines(
     }
 }
 
+// Find Left or Right Lane
+void detectSingleLaneLine(
+    Mat& aMatDst,
+    Mat aMatEdge,
+    Rect aRoiRect
+    )
+{
+    const double vRho = 1;
+    const double vTheta = 2 * M_PI / 180.0;
+    // This value is critical and hard to determine
+    const int vThreshold = aMatDst.rows / 8;
+
+    Mat vMatRoi = aMatEdge( aRoiRect );
+    vector<Vec2f> vLines;
+    HoughLines( vMatRoi, vLines, vRho, vTheta, vThreshold );
+    vLines = groupLines( vLines, 3 * vRho, 3 * vTheta);
+    vector<line_t> vProcessedLines = processHoughLines( vLines, aRoiRect );
+    line_t vLaneLine = extractCurrentLaneLine( vProcessedLines );
+    line(
+        aMatDst,
+        vLaneLine.mPt1,
+        vLaneLine.mPt2,
+        Scalar( 0, 155, 255 ),
+        3,
+        CV_AA
+        );
+}
 
 Mat detectLanes( Mat aMat )
 {
@@ -170,49 +197,11 @@ Mat detectLanes( Mat aMat )
     Mat vMatEdges;
     Canny( vMatBlurred, vMatEdges, 35, 90);
 
-    // Hough Transform
-    const double vRho = 1;
-    const double vTheta = 2 * M_PI / 180.0;
-    // This value is critical and hard to determine
-    const int vThreshold = vMatEdges.rows / 8;
+    Rect vBotRightRect( vMatEdges.cols / 2, vMatEdges.rows / 2, vMatEdges.cols / 2, vMatEdges.rows / 2);
+    detectSingleLaneLine( aMat, vMatEdges, vBotRightRect );
 
-    // Bottom right corner
-    {
-    Rect vRoiRect( vMatEdges.cols / 2, vMatEdges.rows / 2, vMatEdges.cols / 2, vMatEdges.rows / 2);
-    Mat vMatRoi = vMatEdges( vRoiRect );
-    vector<Vec2f> vLines;
-    HoughLines( vMatRoi, vLines, vRho, vTheta, vThreshold );
-    vLines = groupLines( vLines, 5 * vRho, 5 * vTheta);
-    vector<line_t> vProcessedLines = processHoughLines( vLines, vRoiRect );
-    line_t vLaneLine = extractCurrentLaneLine( vProcessedLines );
-    line(
-        aMat,
-        vLaneLine.mPt1,
-        vLaneLine.mPt2,
-        Scalar( 0, 155, 255 ),
-        3,
-        CV_AA
-        );
-    }
-
-    // Bottom left corner
-    {
-    Rect vRoiRect( 0, vMatEdges.rows / 2, vMatEdges.cols / 2, vMatEdges.rows / 2);
-    Mat vMatRoi = vMatEdges( vRoiRect );
-    vector<Vec2f> vLines;
-    HoughLines( vMatRoi, vLines, vRho, vTheta, vThreshold );
-    vLines = groupLines( vLines, 5 * vRho, 5 * vTheta);
-    vector<line_t> vProcessedLines = processHoughLines( vLines, vRoiRect );
-    line_t vLaneLine = extractCurrentLaneLine( vProcessedLines );
-    line(
-        aMat,
-        vLaneLine.mPt1,
-        vLaneLine.mPt2,
-        Scalar( 0, 155, 255 ),
-        3,
-        CV_AA
-        );    
-    }
+    Rect vBotLeftRect( 0, vMatEdges.rows / 2, vMatEdges.cols / 2, vMatEdges.rows / 2);
+    detectSingleLaneLine( aMat, vMatEdges, vBotLeftRect );
 
     return aMat;
 }

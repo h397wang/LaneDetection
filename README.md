@@ -4,6 +4,13 @@
 MacOS High Sierra 10.13.1
 OpenCV 3.2.0
 
+### Directory Structure
+build: compilation script and output/executible files
+demo: demo videos and screenshots of the program
+imgs: test images
+src: source code and CMake file
+vids: test videos
+
 ### Build and Run Instructions
 1.  If you've never run a C++ OpenCV Application before do the following, otherwise skip:
     Download the appropriate OpenCV library zip file

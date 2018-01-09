@@ -40,6 +40,12 @@ line_t extractCurrentLaneLine(
 
 void drawHoughLines( Mat& aMat, const vector<Vec2f> aLines, Point aOffset );
 
+void detectSingleLaneLine(
+    Mat& aMat,
+    Mat aMatEdge,
+    Rect aRoiRect
+    );
+
 Mat detectLanes( Mat aMat );
 
 int processStaticImage( const char* apFileName );
