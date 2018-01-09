@@ -17,7 +17,7 @@ vids: test videos
     cd to the root directory of the OpenCV library folder and run: cmake .
 2.  cd to build directory of the package I sent you and run: sh compile.sh
     All this shell script does is call cmake and then make.
-3.  Run the executable, specify a .jpg or .mp4 file as the command line argument.
+3.  Run the executable (located in the build directory), specify a .jpg or .mp4 file as the command line argument.
     For example: ./LaneDetection ../vids/SolidWhiteRight.mp4
 If you have any questions, just send me a message (h397wang@uwaterloo.ca)
 
