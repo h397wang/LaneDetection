@@ -43,3 +43,9 @@ The thresholds are currently constant, and quite arbituary. They should be deter
 Curvature of road not accounted for.
 The lane line are currently represented using 2 straight lines. The curvature of the road needs to be described using some radius value. One way to do this is to do an affine transform so we can see the road from a bird's eye view, and calculate as required.
 
+### Demo
+See the demo folder for static pictures and videos.
+
+![alt text](demo/Screen%20Shot%202018-01-09%20at%205.14.43%20PM.png)
+![alt text](demo/Screen%20Shot%202018-01-09%20at%205.17.37%20PM.png)
+
